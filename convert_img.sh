@@ -10,8 +10,7 @@
 
 #default options args
 directory=$PWD
-idLen=8
-MAX_NUM=99999999
+uniqueNumLen=8
 uniqueNumInit=0
 uniqueNum=$uniqueNumInit
 
@@ -37,7 +36,7 @@ echo "The directory was changed to : $OPTARG"
 ;;
 
 n) checkargs
-idLen=$OPTARG
+uniqueNumLen=$OPTARG
 echo "The number of digits in id was changed to : $OPTARG"
 ;;
 
@@ -56,24 +55,36 @@ done
 setNewUniqueNum()
 {
     uniqueNum=$[ $uniqueNum+1 ];
-    echo $uniqueNum
-    if [ $uniqueNum -gt $MAX_NUM ];  then
+    local numLen=${#uniqueNum} 
+    if [ $numLen -gt $uniqueNumLen ];  then
         echo "The unique number becomes bigger then max possible. Set it to default value: $uniqueNumInit"
         $uniqueNum=$uniqueNumInit
     fi
+}
+
+printUniqueNum()
+{
+    local numLen=${#uniqueNum}
+    local printedNum=""
+    if [ $numLen -lt $uniqueNumLen ];  then
+        for i in {1..$uniqueNumLen} do
+        $printedNum + 0
+        done 
+    fi
+    
+    echo "$printedNum + $uniqueNumInit"
 }
 
 renameFile()
 {
     setNewUniqueNum
     dateStump=`date +%S_%M_%H-%d-%m-%Y`
-    fileName="$dateStump-$uniqueNum.jpg"
+    fileName="$dateStump-$printUniqueNum.jpg"
 
     echo "Rename file $1 to $fileName in $directory"
 
     mv ./$1 ./$fileName
 }
-
 
 
 
