@@ -65,32 +65,23 @@ setNewUniqueNum()
 printUniqueNum()
 {
     local numLen=${#uniqueNum}
-    local printedNum=""
-    if [ $numLen -lt $uniqueNumLen ];  then
-        for i in {1..$uniqueNumLen} do
-        $printedNum + 0
-        done 
+    if [ $numLen -le $uniqueNumLen ];  then
+        printf -v printedNum "%0${uniqueNumLen}d" $uniqueNum
     fi
-    
-    echo "$printedNum + $uniqueNumInit"
+    echo "$printedNum"
 }
 
 renameFile()
 {
     setNewUniqueNum
     dateStump=`date +%S_%M_%H-%d-%m-%Y`
-    fileName="$dateStump-$printUniqueNum.jpg"
+    fileName="$dateStump-$(printUniqueNum).jpg"
 
     echo "Rename file $1 to $fileName in $directory"
 
     mv ./$1 ./$fileName
 }
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> d7d8e63284efc4b29f8f2e5a67cb66900be44436
 testRename()
 {
     cd $directory
