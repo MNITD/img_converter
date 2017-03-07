@@ -55,9 +55,9 @@ done
 
 setNewUniqueNum()
 {
-    uniqueNum=$[$uniqueNum+1];
-    
-    if [$uniqueNum > $MAX_NUM];  then
+    uniqueNum=$[ $uniqueNum+1 ];
+    echo $uniqueNum
+    if [ $uniqueNum -gt $MAX_NUM ];  then
         echo "The unique number becomes bigger then max possible. Set it to default value: $uniqueNumInit"
         $uniqueNum=$uniqueNumInit
     fi
@@ -66,12 +66,12 @@ setNewUniqueNum()
 renameFile()
 {
     setNewUniqueNum
-    dateStump=`%S_%M_%H-%d-%m-%Y`
+    dateStump=`date +%S_%M_%H-%d-%m-%Y`
     fileName="$dateStump-$uniqueNum.jpg"
 
     echo "Rename file $1 to $fileName in $directory"
 
-    mv $directory/$1 $directory/$fileName
+    mv ./$1 ./$fileName
 }
 
 
@@ -79,6 +79,7 @@ renameFile()
 
 testRename()
 {
+    cd $directory
     for file in $( ls ); do
         renameFile $file			
 	done
