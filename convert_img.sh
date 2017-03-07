@@ -74,14 +74,18 @@ renameFile()
     mv ./$1 ./$fileName
 }
 
-
-
-
 testRename()
 {
     cd $directory
-    for file in $( ls ); do
-        renameFile $file			
+    for file in $( ls )
+    do
+    case ${file##*.} in
+    
+    tiff|gif|bmp|png|ppm|pgm|pbm|pnm|webp|hdr|heif|bat|bpg|cgm|svg|ics|wbmp|jng|jpg|jpeg)
+    renameFile $file	
+    ;;
+        
+    esac
 	done
 }
 
