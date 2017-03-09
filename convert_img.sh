@@ -90,6 +90,7 @@ testRename()
     case ${file##*.} in
     
     tiff|gif|bmp|png|ppm|pgm|pbm|pnm|webp|hdr|heif|bat|bpg|cgm|svg|ics|wbmp|jng|jpg|jpeg)
+    #
     renameFile $file	
     ;;
         
@@ -97,7 +98,16 @@ testRename()
 	done
 }
 
-testRename
+#testRename
+
+
+rename()
+{
+    dateStump=`date +%S_%M_%H-%d-%m-%Y`
+    find . -iregex '.*\.\(tiff\|gif\|bmp\|png\|ppm\|pgm\|pbm\|pnm\|webp\|hdr\|heif\|bpg\|cgm\|svg\|ics\|wbmp\|jng\|jpg\|jpeg\)$' -exec convert '{}' $dateStump-%0${uniqueNumLen}d.jpg
+}
+
+rename
 
 
 
